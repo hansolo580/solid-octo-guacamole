@@ -2,6 +2,7 @@ from docx import *
 from tkinter import *
 from datetime import datetime
 from datetime import date
+from tkinter.messagebox import showerror
 
 #Style
 colorPrimary = '#AD2623'
@@ -97,8 +98,13 @@ def clkGenerateOneSheet():
     clientValue = client.get()
     orderDateValue = orderDate.get()
     startDateValue = startDate.get()
-    payRateValue = payRate.get()
-    heavyLifterValue = heavyLifterOptions[heavyLifter.get()]
+    payRateValue = payRate.get() 
+    if heavyLifterOptions[heavyLifter.get()] == True:
+        heavyLifterDisplay = "Yes"
+    elif heavyLifterOptions[heavyLifter.get()] == False:
+        heavyLifterDisplay = "No"
+    else:
+        showerror(title = "Error", message = "You must select Yes or No for Heavy Lifter")
     shiftSelectValue = shiftOptions[shift.get()]
     hoursValue = hours.get()
     locationValue = location.get()
@@ -109,7 +115,34 @@ def clkGenerateOneSheet():
 
     onesheet = Document()
 
-    onesheet.add_heading(jobTitleValue, 0)
+    onesheet.add_heading(jobTitleValue + " @ " + clientValue, 0)
+
+    #builds and display table
+    displayTable = onesheet.add_table(rows=9, cols=2)
+    
+    label_cells = displayTable.columns[0].cells
+    label_cells[0].text = 'Order Date'
+    label_cells[1].text = 'Start Date'
+    label_cells[2].text = 'Pay Rate'
+    label_cells[3].text = 'Heavy Lifter'
+    label_cells[4].text = 'Shift'
+    label_cells[5].text = 'Hours'
+    label_cells[6].text = 'Location'
+    label_cells[7].text = 'Supervisor'
+    label_cells[8].text = 'Openings'
+
+    data_cells = displayTable.columns[1].cells
+    data_cells[0].text = orderDateValue
+    data_cells[1].text = startDateValue
+    data_cells[2].text = payRateValue
+    
+    data_cells[3].text = heavyLifterDisplay
+    data_cells[4].text = str(shiftSelectValue)
+    data_cells[5].text = hoursValue
+    data_cells[6].text = locationValue
+    data_cells[7].text = supervisorValue
+    data_cells[8].text = openingsValue
+
 
     today = date.today()
     onesheet.save(str(clientValue)+str(jobTitleValue)+str(today)+'.docx')
