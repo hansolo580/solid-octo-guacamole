@@ -5,8 +5,9 @@ Simple GUI to accept input from recruiters and generate a .docx one-sheet for th
 
 Todo:
 
-Pass tkint inputs to doc generation
 File storage location selection
-Print
+Print (Likely will just have user print via Word for now)
 Separate generator button to pull appropriate fields internal vs    external doc
 Multiple job creation?
+bg requirements
+tabbing between fields
