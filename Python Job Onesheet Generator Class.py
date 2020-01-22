@@ -172,7 +172,12 @@ def clkGenerateOneSheet():
     locationValue = location.get()
     supervisorValue = supervisor.get()
     openingsValue = openings.get()
-    backgroundValue = background.get()
+    backgroundValue = background.get("1.0",'end-1c')
+    jobDescriptionValue = jobDescription.get('1.0','end-1c')
+    educationValue = education.get('1.0','end-1c')
+    experienceValue = experience.get('1.0','end-1c')
+    skillsValue = skills.get('1.0','end-1c')
+    certificationsValue = certifications.get('1.0','end-1c')
 
 
 
@@ -181,7 +186,7 @@ def clkGenerateOneSheet():
     onesheet.add_heading(jobTitleValue + " @ " + clientValue, 0)
 
     #builds and display table
-    displayTable = onesheet.add_table(rows=9, cols=2)
+    displayTable = onesheet.add_table(rows=15, cols=2)
     
     label_cells = displayTable.columns[0].cells
     label_cells[0].text = 'Order Date'
@@ -193,7 +198,12 @@ def clkGenerateOneSheet():
     label_cells[6].text = 'Location'
     label_cells[7].text = 'Supervisor'
     label_cells[8].text = 'Openings'
-    label_calls[9].text = 'Background Requirements'
+    label_cells[9].text = 'Background Requirements'
+    label_cells[10].text = 'Job Description'
+    label_cells[11].text = 'Education Requirements'
+    label_cells[12].text = 'Experience Requirements'
+    label_cells[13].text = 'Skill Requirements'
+    label_cells[14].text = 'Certification Requirements'
 
     data_cells = displayTable.columns[1].cells
     data_cells[0].text = orderDateValue
@@ -206,12 +216,19 @@ def clkGenerateOneSheet():
     data_cells[7].text = supervisorValue
     data_cells[8].text = openingsValue
     data_cells[9].text = backgroundValue
+    data_cells[10].text = jobDescriptionValue
+    data_cells[11].text = educationValue
+    data_cells[12].text = experienceValue
+    data_cells[13].text = skillsValue
+    data_cells[14].text = certificationsValue
 
     
     today = date.today()
     filename=str(clientValue)+str(jobTitleValue)+str(today)+'.docx'
     onesheet.save(saveLocation+'\\'+filename)
 
-Button(winMain, text="Generate Onesheet", height = 2, width = 20, bg = colorPrimary, fg="white", command=clkGenerateOneSheet).grid (column = 5, row = 12)
+btnCreateOnesheet = Button(winMain, text="Generate Onesheet", height = 2, width = 20, bg = colorPrimary, fg="white", command=clkGenerateOneSheet)
+btnCreateOnesheet.grid (column = 5, row = 12)
+btnCreateOnesheet.bind("<Return>",clkGenerateOneSheet)
 
 winMain.mainloop()

@@ -11,3 +11,5 @@ Separate generator button to pull appropriate fields internal vs    external doc
 Multiple job creation?
 bg requirements
 tabbing between fields
+fix return event on generateonesheet button
+get and display values from text widget
