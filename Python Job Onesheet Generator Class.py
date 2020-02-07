@@ -1,5 +1,5 @@
-from docx import *
-from tkinter import *
+from docx import Document
+from tkinter import Button, END, Entry, Label, OptionMenu, StringVar, Text, Tk
 from tkinter import filedialog
 from datetime import datetime
 from datetime import date
