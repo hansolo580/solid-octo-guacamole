@@ -19,38 +19,32 @@ winMain = Tk()
 winMain.title("Onesheet Generator")
 winMain.geometry('1000x750')
 
-winMain.grid_columnconfigure(0, weight=1)
-winMain.grid_columnconfigure(1, weight=1)
-winMain.grid_columnconfigure(2, weight=1)
-winMain.grid_columnconfigure(3, weight=1)
-winMain.grid_columnconfigure(4, weight=1)
-winMain.grid_columnconfigure(5, weight=1)
-winMain.grid_columnconfigure(6, weight=1)
-winMain.grid_columnconfigure(7, weight=1)
-winMain.grid_columnconfigure(8, weight=1)
-winMain.grid_columnconfigure(9, weight=1)
-winMain.grid_columnconfigure(10, weight=1)
-winMain.grid_columnconfigure(11, weight=1)
-winMain.grid_rowconfigure(0, weight=1)
-winMain.grid_rowconfigure(1, weight=1)
-winMain.grid_rowconfigure(2, weight=1)
-winMain.grid_rowconfigure(3, weight=1)
-winMain.grid_rowconfigure(4, weight=1)
-winMain.grid_rowconfigure(5, weight=1)
-winMain.grid_rowconfigure(6, weight=1)
-winMain.grid_rowconfigure(7, weight=1)
-winMain.grid_rowconfigure(8, weight=1)
-winMain.grid_rowconfigure(9, weight=1)
-winMain.grid_rowconfigure(10, weight=1)
-winMain.grid_rowconfigure(11, weight=1)
-winMain.grid_rowconfigure(12, weight=1)
-winMain.grid_rowconfigure(13, weight=1)
-winMain.grid_rowconfigure(14, weight=1)
+class entryBox:
 
-Label(winMain, text="Job Title").grid(column = 0, row = 2)
-jobTitle = Entry(winMain)
-jobTitle.grid(column = 1, row = 2, columnspan = 3)
-jobTitle.insert(END, '')
+    def __init__(self, window, lblcolumn, lblrow, lbltext, span, varname):
+        self.window = window
+        self.lblcolumn = lblcolumn
+        self.lblrow = lblrow
+        self.lbltext = lbltext
+        self.span = span
+        self.varname = varname
+        self.create(window, lblcolumn, lblrow, lbltext, span, varname)
+    
+    def create(self, window, lblcolumn, lblrow, lbltext, span, varname):    
+        Label(window, text=str(lbltext)).grid(column = lblcolumn, row = lblrow)
+        varname = Entry(window)
+        varname.grid(column = lblcolumn + 1, row = lblrow, columnspan = span)
+        varname.insert(END, '')
+        return varname
+
+    def value(self, varname):
+        result = varname.get()
+        return result
+        
+
+jobTitleBox = entryBox(winMain, 0, 2, "Job Title", 3, 'jobTitle')
+
+clientBox = entryBox(winMain, 0, 3, "Client", 3, 'client')
 
 Label(winMain, text="Client").grid(column = 0, row = 3)
 client = Entry(winMain)
@@ -156,7 +150,7 @@ if not os.path.exists(saveLocation):
     os.makedirs(saveLocation)
 
 def clkGenerateOneSheet():
-    jobTitleValue = jobTitle.get()
+    jobTitleValue = jobTitleBox.value('jobTitle')
     clientValue = client.get()
     orderDateValue = str(orderDateSelector.get_date())
     startDateValue = str(startDateSelector.get_date())
